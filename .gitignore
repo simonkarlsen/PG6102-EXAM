@@ -1,0 +1,29 @@
+# Project exclude paths
+target/
+/rest-dto/target/
+/rest-exception/target/
+/target/
+/trip/target/
+
+**/target
+/.idea/
+/*.iml
+**/*.iml
+**/.idea
+
+
+*.class
+
+# Package Files #
+*.jar
+*.war
+
+/nbproject/private/
+
+
+
+**/node_modules
+bundle.js
+
+
+~$*

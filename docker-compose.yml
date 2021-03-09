@@ -1,0 +1,69 @@
+# Adapted from https://github.com/arcuri82/testing_security_development_enterprise_systems/blob/master/advanced/exercise-solutions/card-game/part-11/docker-compose.yml
+version: '3.3'
+
+services:
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "80:8080"
+    depends_on:
+      - discovery
+
+  rabbitmq:
+    image:  "rabbitmq:3"
+
+  discovery:
+    image: "consul:1.8"
+    environment:
+      - CONSUL_LOCAL_CONFIG={"log_level":"info"}
+
+#  redis:
+#    image: "redis:latest"
+
+#  postgres-auth:
+#    image: "postgres:10"
+#    environment:
+#      - POSTGRES_HOST_AUTH_METHOD=trust
+
+  postgres-trips:
+    image: "postgres:10"
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+
+#  auth:
+#    build:
+#      context: ./auth
+#      dockerfile: Dockerfile
+#    depends_on:
+#      - api-gateway
+#      - redis
+#      - postgres-auth
+#      - rabbitmq
+
+  trip_0:
+    build:
+      context: ./trip
+      dockerfile: Dockerfile
+    depends_on:
+      - api-gateway
+      - discovery
+      - postgres-trips
+      - rabbitmq
+
+  trip_1:
+    build:
+      context: ./trip
+      dockerfile: Dockerfile
+    depends_on:
+      - api-gateway
+      - discovery
+      - postgres-trips
+      - rabbitmq
+
+
+
+
+
